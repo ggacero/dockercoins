@@ -13,8 +13,7 @@ services:
       -
         rubi
     environment:
-      -
-        autor: GGA
+      autor: GGA
     image: ggacer/ruby:sinatra-thin
     networks:
       -
