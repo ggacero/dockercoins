@@ -27,4 +27,72 @@ services:
         uid: '65534'
     user: nobody
     working_dir: /data/
+  redis:
+      command:
+        -
+          redis-server
+      entrypoint
+        -
+          docker-entrypoint.sh
+      environment:
+        autor: Guillermo
+      image: ggacer/ruby:sinatra-thin
+      networks:
+        -
+          dockercoins
+      restart: always
+      volumes:
+        -
+          read_only: false
+          source: volume-redis
+          target: /data/
+          type: volume
+      working_dir: /data/
+  webui:
+    command:
+      -
+        webui.js
+    entrypoint
+      -
+        node
+    environment:
+      autor: Guillermo
+    image: ggacer/node:express-redis
+    networks:
+      -
+        dockercoins
+    ports:
+      -
+        8080:80
+    restart: always
+    secrets:
+      -
+        mode: 0400
+        source: secret-rng
+        target: /data/webui.js
+        uid: '65534'
+    user: nobody
+    working_dir: /data/
+  hasher:
+    command:
+      -
+        hasher.rb
+    entrypoint
+      -
+        rubi
+    environment:
+      autor: Guillermo
+    image: ggacer/ruby:sinatra-thin
+    networks:
+      -
+        dockercoins
+    restart: always
+    secrets:
+      -
+        mode: 0400
+        source: secret-hasher
+        target: /data/hasher.rb
+        uid: '65534'
+    user: nobody
+    working_dir: /data/
 version: '3.9' 
