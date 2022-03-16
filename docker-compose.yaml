@@ -17,7 +17,7 @@ services:
         hasher.rb
     entrypoint
       -
-        rubi
+        ruby
     environment:
       autor: Guillermo
     image: ggacer/ruby:sinatra-thin
