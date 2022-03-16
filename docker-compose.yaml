@@ -19,11 +19,13 @@ services:
     networks:
       -
         dockercoins
+    restart: always
     secrets:
       -
         mode: 0400
         source: secret-hasher
         target: /data/hasher.rb
-        uid: 65534
+        uid: '65534'
     user: nobody
     working_dir: /data/
+version: '3.9' 
