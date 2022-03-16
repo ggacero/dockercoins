@@ -4,6 +4,12 @@ networks:
 secrets:
   secret-hasher:
     file: $PWD/hasher/hasher.rb
+  secret-rng:
+    file: $PWD/rng/rng.py
+  secret-webui:
+    file: $PWD/webui/webui.js
+  secret-worker:
+    file: $PWD/worker/worker.py  
 services: 
   hasher:
     command:
@@ -68,12 +74,12 @@ services:
     secrets:
       -
         mode: 0400
-        source: secret-rng
+        source: secret-webui
         target: /data/webui.js
         uid: '65534'
     user: nobody
     working_dir: /data/
-  hasher:
+  rng:
     command:
       -
         hasher.rb
