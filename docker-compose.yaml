@@ -19,7 +19,7 @@ services:
       -
         rubi
     environment:
-      autor:Guillermo
+      autor: Guillermo
     image: ggacer/ruby:sinatra-thin
     networks:
       -
