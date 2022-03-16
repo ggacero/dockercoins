@@ -1,5 +1,5 @@
 # dockercoins
----
+```
 git clone https://github.com/academiaonline-org/dockercoins
 cd dockercoins
 docker network create dockercoins
@@ -18,3 +18,4 @@ docker run -d --entrypoint python --name rng --read-only --restart always -u nob
 docker build -t ggacer/python:redis-requests worker/
 docker push ggacer/python:redis-requests
 docker run -d --entrypoint python --name worker --read-only --restart always -u nobody -v $PWD/worker/worker.py:/data/worker.py -w /data/ --network dockercoins ggacer/python:redis-requests worker.py 
+```
