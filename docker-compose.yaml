@@ -42,7 +42,7 @@ services:
           docker-entrypoint.sh
       environment:
         autor: Guillermo
-      image: ggacer/ruby:sinatra-thin
+      image: ggacer/redis:alpine
       networks:
         -
           dockercoins
@@ -63,7 +63,7 @@ services:
         node
     environment:
       autor: Guillermo
-    image: ggacer/node:express-redis
+    image: ggacer/node:4-slim-express-redis
     networks:
       -
         dockercoins
@@ -82,13 +82,13 @@ services:
   rng:
     command:
       -
-        hasher.rb
+        rng.py
     entrypoint
       -
-        rubi
+        python
     environment:
       autor: Guillermo
-    image: ggacer/ruby:sinatra-thin
+    image: ggacer/python:flask
     networks:
       -
         dockercoins
@@ -96,9 +96,34 @@ services:
     secrets:
       -
         mode: 0400
-        source: secret-hasher
-        target: /data/hasher.rb
+        source: secret-rng
+        target: /data/rng.py
+        uid: '65534'
+    user: nobody
+    working_dir: /data/
+  worker:
+    command:
+      -
+        worker.rb
+    entrypoint
+      -
+        python
+    environment:
+      autor: Guillermo
+    image: python:redis-requests
+    networks:
+      -
+        dockercoins
+    restart: always
+    secrets:
+      -
+        mode: 0400
+        source: secret-worker
+        target: /data/worker.py
         uid: '65534'
     user: nobody
     working_dir: /data/
 version: '3.9' 
+volumes:
+  volume-redis:
+  
